@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "updated_at": "2026-11-05T16:43:00Z",
+  "nodes": [
+    {
+      "id": "frontend",
+      "type": "application",
+      "label": "React + Vite PWA"
+    },
+    {
+      "id": "supabase_auth",
+      "type": "service",
+      "label": "Supabase Auth"
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "PostgreSQL multi-tenant"
+    },
+    {
+      "id": "rls",
+      "type": "security",
+      "label": "Row Level Security"
+    },
+    {
+      "id": "realtime",
+      "type": "service",
+      "label": "Supabase Realtime"
+    },
+    {
+      "id": "rpc",
+      "type": "backend",
+      "label": "Privileged RPCs in private schema"
+    },
+    {
+      "id": "migrations",
+      "type": "delivery",
+      "label": "Versioned SQL migrations"
+    },
+    {
+      "id": "github_actions",
+      "type": "automation",
+      "label": "CI GraphOS + Vite build"
+    },
+    {
+      "id": "graphos",
+      "type": "orchestration",
+      "label": "DAG scheduler and agent registry"
+    },
+    {
+      "id": "memory",
+      "type": "knowledge",
+      "label": "Working, project, evolutionary and strategic memory"
+    },
+    {
+      "id": "pwa",
+      "type": "client",
+      "label": "Manifest and service worker"
+    }
+  ],
+  "edges": [
+    {
+      "from": "frontend",
+      "to": "supabase_auth",
+      "type": "authenticates_with"
+    },
+    {
+      "from": "frontend",
+      "to": "postgres",
+      "type": "reads_and_writes_through_rls"
+    },
+    {
+      "from": "frontend",
+      "to": "realtime",
+      "type": "subscribes_to"
+    },
+    {
+      "from": "frontend",
+      "to": "rpc",
+      "type": "calls"
+    },
+    {
+      "from": "rpc",
+      "to": "postgres",
+      "type": "mutates_atomically"
+    },
+    {
+      "from": "rls",
+      "to": "postgres",
+      "type": "protects"
+    },
+    {
+      "from": "migrations",
+      "to": "postgres",
+      "type": "defines_schema"
+    },
+    {
+      "from": "github_actions",
+      "to": "frontend",
+      "type": "builds"
+    },
+    {
+      "from": "github_actions",
+      "to": "graphos",
+      "type": "validates"
+    },
+    {
+      "from": "graphos",
+      "to": "memory",
+      "type": "updates"
+    },
+    {
+      "from": "frontend",
+      "to": "pwa",
+      "type": "installs_as"
+    }
+  ]
+}
