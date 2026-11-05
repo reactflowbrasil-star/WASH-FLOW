@@ -96,7 +96,7 @@
       "resources": [
         "src"
       ],
-      "status": "TESTING",
+      "status": "DONE",
       "acceptance": "Excel/CSV, prioridades, busca, grupos, modelos, histórico e alertas operacionais"
     },
     {
@@ -141,6 +141,22 @@
       ],
       "status": "DONE",
       "acceptance": "Dois tenants isolados; owner convida; manager não convida; operator executa; inspector devolve e aprova"
+    },
+    {
+      "id": "WF-011",
+      "description": "Implementar seed padrão idempotente por unidade vazia",
+      "owner": "DATABASE",
+      "priority": 88,
+      "dependencies": [
+        "WF-002",
+        "WF-003"
+      ],
+      "resources": [
+        "supabase/migrations",
+        "src"
+      ],
+      "status": "DONE",
+      "acceptance": "Primeira abertura semeia dez veículos de referência uma vez; restauração manual continua disponível"
     }
   ]
 }
