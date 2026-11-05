@@ -56,5 +56,7 @@ test('normalizes unknown groups to AM and preserves tenant id', () => {
 
 test('handles empty sheets and returns diagnostics when no valid plates are found', () => {
  assert.throws(() => parseVehicleImport([], 'site-1', groups), /vazia/);
- const invalid = parseVehicleImport([['Placa'],['abc']], 'site-1', groups);\n assert.equal(invalid.rows.length, 0);\n assert.equal(invalid.invalid, 1);
+ const invalid = parseVehicleImport([['Placa'],['abc']], 'site-1', groups);
+ assert.equal(invalid.rows.length, 0);
+ assert.equal(invalid.invalid, 1);
 });
