@@ -15,11 +15,12 @@ O documento PROMPT OBRIGATÓRIO no Google Drive é a diretriz mestre. Consulte t
 - Entrada na fila com prioridade Baixa/Normal/Alta/Urgente e observações/avarias.
 - Ordenação por prioridade, alteração autorizada de prioridade e prevenção de duplicidade.
 - Fluxo NaFila → Lavando → AguardandoConferencia → Concluido ou Refazer.
-- Conferência com motivo obrigatório de retrabalho e aprovação atômica.
+- Conferência com modal de motivo obrigatório para retrabalho e aprovação atômica.
+- Remoção controlada de itens ainda não iniciados na fila, validada por RPC.
 - Histórico com snapshot de marca/modelo/grupo, horários, observações e duração.
 - KPIs de lavagens hoje e no mês, com contagens completas no banco.
-- Supabase Realtime por unidade e indicador de conexão no cabeçalho.
-- Manifest PWA e service worker para cache básico da interface.
+- Supabase Realtime por unidade, contadores nas abas e notificações Sonner para urgentes, conferência e retrabalho.
+- Manifest PWA, orientação portrait-primary, metadados mobile/iOS e service worker para cache básico da interface.
 
 ## Instalação e desenvolvimento
 1. npm install
