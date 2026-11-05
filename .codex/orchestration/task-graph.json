@@ -187,7 +187,22 @@
         ".github/workflows/ci.yml"
       ],
       "status": "DONE",
-      "acceptance": "Seis testes Node aprovados localmente; declaração TypeScript verificada; npm test integrado ao CI"
+      "acceptance": "Sete testes Node aprovados localmente; declaração TypeScript verificada; npm test integrado ao CI"
+    },
+    {
+      "id": "WF-015",
+      "description": "Adicionar orientação e ação de instalação PWA em dispositivos móveis",
+      "owner": "FRONTEND",
+      "priority": 76,
+      "dependencies": [
+        "WF-013"
+      ],
+      "resources": [
+        "src/App.tsx",
+        "public/manifest.webmanifest"
+      ],
+      "status": "TESTING",
+      "acceptance": "Prompt beforeinstallprompt no Android/Chrome e instruções manuais para iOS; build TypeScript pendente"
     }
   ]
 }
