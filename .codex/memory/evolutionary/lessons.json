@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T16:43:00Z",
+  "updated_at": "2026-11-05T17:08:00Z",
   "lessons": [
     {
       "id": "LESSON-001",
@@ -25,6 +25,12 @@
       "cause": "Initial npm build errors from nullable Supabase client and missing Vite ImportMeta types.",
       "fix": "Add vite-env.d.ts and non-null client assertions after guards.",
       "test": "GitHub Actions build green."
+    },
+    {
+      "id": "LESSON-005",
+      "cause": "PWA shell cache without build asset precaching could leave the initial app bundle unavailable offline.",
+      "fix": "Service Worker inspects the deployed index document during install and caches referenced JS/CSS assets; navigation falls back to cached index.",
+      "test": "Node syntax validation passed; offline device verification remains pending."
     }
   ]
 }
