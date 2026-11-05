@@ -36,8 +36,9 @@
     },
     {
       "id": "DEC-003",
-      "decision": "Frota padrão inserida apenas por ação confirmada, não automaticamente",
-      "evidence": "Evita poluir unidades reais com dados de demonstração"
+      "decision": "Seed dos dez veículos de referência ocorre uma única vez na primeira abertura de unidade vazia; restauração manual também fica disponível.",
+      "evidence": "Função idempotente ensure_default_fleet e botão Restaurar padrão nos documentos 01/DB."
     }
-  ]
+  ],
+  "updated_at": "2026-11-05T17:08:00Z"
 }
