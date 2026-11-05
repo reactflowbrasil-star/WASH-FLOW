@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T17:08:00Z",
+  "updated_at": "2026-11-05T17:18:00Z",
   "frontend": {
     "framework": "React + TypeScript + Vite",
     "state": "React hooks",
     "ui": "CSS responsivo + Sonner",
-    "spreadsheet": "SheetJS xlsx: XLSX, XLS and CSV with row-level diagnostics"
+    "spreadsheet": "SheetJS XLSX/XLS/CSV plus isolated vehicleImportParser.mjs: header alias detection, strict Brazilian plate validation, duplicate consolidation, invalid-row diagnostics, 500-row upsert batches"
   },
   "backend": {
     "provider": "Supabase",
@@ -46,5 +46,23 @@
     "service_worker": "public/sw.js",
     "cache_version": "wash-flow-v3",
     "offline": "navigation fallback and runtime asset cache"
+  },
+  "testing": {
+    "unit_tests": "Node built-in test runner",
+    "test_command": "npm test",
+    "coverage": [
+      "header aliases and accent normalization",
+      "Mercosul and legacy plate formats",
+      "invalid row reporting",
+      "duplicate consolidation",
+      "vehicle group fallback",
+      "tenant id preservation"
+    ],
+    "ci_order": [
+      "GraphOS validation",
+      "npm install",
+      "npm test",
+      "npm run build"
+    ]
   }
 }
