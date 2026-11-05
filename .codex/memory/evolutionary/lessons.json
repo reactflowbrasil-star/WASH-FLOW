@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T17:08:00Z",
+  "updated_at": "2026-11-05T17:18:00Z",
   "lessons": [
     {
       "id": "LESSON-001",
@@ -31,6 +31,12 @@
       "cause": "PWA shell cache without build asset precaching could leave the initial app bundle unavailable offline.",
       "fix": "Service Worker inspects the deployed index document during install and caches referenced JS/CSS assets; navigation falls back to cached index.",
       "test": "Node syntax validation passed; offline device verification remains pending."
+    },
+    {
+      "id": "LESSON-006",
+      "cause": "A planilha legada podia ter cabeçalho ou colunas fora da ordem e fallback permissivo podia importar a palavra 'Placa' como matrícula inválida.",
+      "fix": "Extrair parser puro, reconhecer aliases normalizados inclusive acentos, aceitar apenas padrões brasileiros estritos, consolidar duplicidades e importar em lotes.",
+      "test": "Seis testes Node aprovados localmente; execução incluída no GitHub Actions."
     }
   ]
 }
