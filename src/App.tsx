@@ -17,7 +17,59 @@ export function App(){
  async function saveVehicle(e:React.FormEvent){e.preventDefault();if(!supabase)return;const r=await supabase!.from('vehicles').insert({site_id:site,plate:plate.trim().toUpperCase(),brand:brand==='Outra'?customBrand:brand,model:model==='Outro'?customModel:model,vehicle_group:group});setError(r.error?.message||'');if(!r.error){setPlate('');setBrand('');setModel('');setCustomBrand('');setCustomModel('');setGroup('');await reload()}}
  async function act(j:Job,next:string){if(!supabase)return;if(next==='Refazer'){setRejectingJob(j);setRejectReason('');return}const r=next==='Concluido'?await supabase!.rpc('complete_wash',{p_job_id:j.id}):await supabase!.rpc('transition_wash',{p_job_id:j.id,p_next_status:next,p_reason:null});setError(r.error?.message||'');if(!r.error)await reload()}
  async function confirmRefazer(){if(!supabase||!rejectingJob||!rejectReason.trim())return;const r=await supabase!.rpc('transition_wash',{p_job_id:rejectingJob.id,p_next_status:'Refazer',p_reason:rejectReason.trim()});setError(r.error?.message||'');if(!r.error){setRejectingJob(null);setRejectReason('');await reload()}}
- async function importCsv(e:React.ChangeEvent<HTMLInputElement>){const file=e.target.files?.[0];if(!file||!supabase||!site)return;try{const workbook=XLSX.read(await file.arrayBuffer(),{type:'array'});const sheet=workbook.Sheets[workbook.SheetNames[0]];const lines=XLSX.utils.sheet_to_json(sheet,{header:1,defval:''}) as unknown[][];const logs=['Arquivo: '+file.name,'Planilha: '+workbook.SheetNames[0],'Linhas lidas: '+lines.length];const unique=new Map<string,any>();lines.forEach((line,i)=>{const cells=line.map(x=>String(x??''));let idx=-1,plate='';for(let c=0;c<cells.length;c++){const p=cells[c].toUpperCase().replace(/[^A-Z0-9]/g,'');if(/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(p)||/^[A-Z]{3}[0-9]{4}$/.test(p)){idx=c;plate=p;break;}}if(idx<0){const fallback=(cells[0]||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(fallback.length>=5){idx=0;plate=fallback;}}if(idx<0){logs.push('Linha '+(i+1)+': placa não identificada | '+cells.join(' | '));return;}const item={site_id:site,plate,brand:cells[idx+1]||'Desconhecida',model:cells[idx+2]||'Desconhecido',vehicle_group:cells[idx+3]&&cells[idx+3].length<=4?cells[idx+3].toUpperCase():'AM'};unique.set(plate,item);logs.push('IMPORTADO: '+plate+' | '+item.brand+' | '+item.model+' | '+item.vehicle_group);});const rows=[...unique.values()];if(!rows.length)throw new Error('Nenhuma placa foi identificada na primeira planilha.');if(rows.length>5000)throw new Error('Limite de 5.000 veículos por importação.');const result=await supabase.from('vehicles').upsert(rows,{onConflict:'site_id,plate'});if(result.error)throw result.error;logs.push('Total importado/atualizado: '+rows.length);setNotice(rows.length+' veículos importados');setDiagnostic(logs.join('\n'));toast.success(rows.length+' veículos importados.');await reload();}catch(err){setError(err instanceof Error?err.message:String(err));}e.target.value=''}
+ async function importCsv(e:React.ChangeEvent<HTMLInputElement>){
+  const file=e.target.files?.[0];if(!file||!supabase||!site)return;
+  try{
+   const workbook=XLSX.read(await file.arrayBuffer(),{type:'array',cellDates:false});
+   const sheetName=workbook.SheetNames[0];if(!sheetName)throw new Error('O arquivo não contém planilhas.');
+   const worksheet=workbook.Sheets[sheetName];
+   const lines=XLSX.utils.sheet_to_json(worksheet,{header:1,defval:'',raw:false}) as unknown[][];
+   if(!lines.length)throw new Error('A primeira planilha está vazia.');
+   const clean=(v:unknown)=>String(v??'').trim();
+   const normalize=(v:unknown)=>clean(v).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+   const validPlate=(v:unknown)=>{const p=clean(v).toUpperCase().replace(/[^A-Z0-9]/g,'');return /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(p)||/^[A-Z]{3}[0-9]{4}$/.test(p)?p:''};
+   const headerAliases={plate:['placa','plate','matricula','registration'],brand:['marca','brand','fabricante'],model:['modelo','model','veiculo','vehicle'],group:['grupo','group','categoria','category']};
+   let headerIndex=-1,columns={plate:-1,brand:-1,model:-1,group:-1};
+   for(let i=0;i<Math.min(lines.length,5);i++){
+    const cells=lines[i].map(normalize);
+    const found:any={};
+    for(const key of Object.keys(headerAliases) as (keyof typeof headerAliases)[]){found[key]=cells.findIndex(cell=>headerAliases[key].includes(cell));}
+    if(found.plate>=0){headerIndex=i;columns=found;break;}
+   }
+   const logs=[`Arquivo: ${file.name}`,`Planilha: ${sheetName}`,`Linhas lidas: ${lines.length}`,headerIndex>=0?'Cabeçalho reconhecido na linha '+(headerIndex+1):'Cabeçalho não identificado; procurando placas em todas as colunas.'];
+   const unique=new Map<string,{site_id:string;plate:string;brand:string;model:string;vehicle_group:string}>();
+   let invalid=0,duplicates=0;
+   lines.forEach((line,i)=>{
+    if(!line||line.every(cell=>clean(cell)===''))return;
+    const cells=line.map(clean);if(i===headerIndex)return;
+    let plate='',plateIndex=-1;
+    if(headerIndex>=0&&columns.plate>=0){plate=validPlate(cells[columns.plate]);plateIndex=columns.plate;}
+    if(!plate){for(let c=0;c<cells.length;c++){const candidate=validPlate(cells[c]);if(candidate){plate=candidate;plateIndex=c;break;}}}
+    if(!plate){invalid++;logs.push(`Linha ${i+1}: placa não identificada | ${cells.join(' | ')}`);return;}
+    const value=(key:'brand'|'model'|'group',offset:number)=>headerIndex>=0&&columns[key]>=0?cells[columns[key]]:cells[plateIndex+offset]||'';
+    const brandValue=value('brand',1)||'Desconhecida';
+    const modelValue=value('model',2)||'Desconhecido';
+    const rawGroup=(value('group',3)||'AM').toUpperCase();
+    const groupValue=GROUPS.includes(rawGroup)?rawGroup:'AM';
+    if(rawGroup!==groupValue)logs.push(`Linha ${i+1}: grupo "${rawGroup}" não reconhecido; aplicado AM.`);
+    if(unique.has(plate))duplicates++;
+    unique.set(plate,{site_id:site,plate,brand:brandValue,model:modelValue,vehicle_group:groupValue});
+    logs.push(`IMPORTADO: ${plate} | ${brandValue} | ${modelValue} | ${groupValue}`);
+   });
+   const rows=[...unique.values()];
+   if(!rows.length)throw new Error('Nenhuma placa válida foi identificada. Confira o cabeçalho e as colunas.');
+   if(rows.length>5000)throw new Error('Limite de 5.000 veículos por importação.');
+   let imported=0;
+   for(let i=0;i<rows.length;i+=500){
+    const result=await supabase.from('vehicles').upsert(rows.slice(i,i+500),{onConflict:'site_id,plate'});
+    if(result.error)throw new Error('Falha no lote '+(Math.floor(i/500)+1)+': '+result.error.message);
+    imported+=Math.min(500,rows.length-i);
+   }
+   logs.push(`Total importado/atualizado: ${imported}`,`Linhas sem placa válida: ${invalid}`,`Placas repetidas consolidadas: ${duplicates}`);
+   setDiagnostic(logs.join('\\n'));setNotice(imported+' veículos importados/atualizados');toast.success(imported+' veículos importados/atualizados.');await reload();
+  }catch(err){const message=err instanceof Error?err.message:String(err);setError(message);toast.error(message);}
+  finally{e.target.value='';}
+ }
  async function addMember(e:React.FormEvent){e.preventDefault();if(!supabase)return;const r=await supabase!.rpc('assign_site_member',{p_site_id:site,p_email:memberId.trim(),p_role:memberRole});setError(r.error?.message||'');if(!r.error){setMemberId('');await reload()}}
  async function toggleSite(s:Site){if(!supabase)return;const r=await supabase!.from('sites').update({status:s.status==='active'?'suspended':'active'}).eq('id',s.id);setError(r.error?.message||'');if(!r.error){const a=await supabase!.from('sites').select('id,name,slug,status');setSites(a.data||[]);setGlobalStats(g=>({...g,sites:a.data?.length||0}))}}
  async function restoreDefaults(){if(!supabase||!site||!confirm('Adicionar/atualizar os 10 veículos padrão nesta unidade?'))return;const rows=[['BHZ7A01','Toyota','Corolla','AM'],['BHZ7B02','Jeep','Compass','SU'],['BHZ7A03','Chevrolet','Onix','B'],['BHZ7A04','Fiat','Strada','BS'],['BHZ7A05','Volkswagen','Polo','EA'],['BHZ7A06','Hyundai','HB20','CA'],['BHZ7A07','Renault','Kwid','SU'],['BHZ7A08','Honda','Civic','AM'],['BHZ7A09','Nissan','Kicks','SU'],['BHZ7A10','Toyota','Hilux','AT']].map(([plate,brand,model,vehicle_group])=>({site_id:site,plate,brand,model,vehicle_group}));const r=await supabase!.from('vehicles').upsert(rows,{onConflict:'site_id,plate'});setError(r.error?.message||'');if(!r.error){setNotice('Veículos padrão restaurados');await reload()}}
