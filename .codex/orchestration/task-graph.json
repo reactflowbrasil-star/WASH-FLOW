@@ -203,6 +203,21 @@
       ],
       "status": "TESTING",
       "acceptance": "Prompt beforeinstallprompt no Android/Chrome e instruções manuais para iOS; build TypeScript pendente"
+    },
+    {
+      "id": "WF-016",
+      "description": "Configurar Data API com grants explícitos de privilégio mínimo e bloquear acesso anônimo",
+      "owner": "SECURITY",
+      "priority": 99,
+      "dependencies": [
+        "WF-003"
+      ],
+      "resources": [
+        "supabase/migrations/20261105172214_wash_flow_explicit_data_api_least_privilege_grants.sql",
+        "supabase/tests/data_api_privileges.sql"
+      ],
+      "status": "DONE",
+      "acceptance": "Migration aplicada; anon sem SELECT/INSERT/UPDATE/DELETE nas seis tabelas; authenticated com privilégios mínimos; RPCs restritos; smoke tests e advisors executados"
     }
   ]
 }
