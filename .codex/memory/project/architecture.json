@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T17:25:00Z",
+  "updated_at": "2026-11-05T17:32:00Z",
   "frontend": {
     "framework": "React + TypeScript + Vite",
     "state": "React hooks",
@@ -66,5 +66,32 @@
       "npm test",
       "npm run build"
     ]
+  },
+  "supabase": {
+    "project_ref": "ubjzgvwukkseutlmonth",
+    "region": "sa-east-1",
+    "postgres": "17.11",
+    "api_url": "https://ubjzgvwukkseutlmonth.supabase.co",
+    "client_key_type": "publishable",
+    "schema_tables": [
+      "platform_admins",
+      "sites",
+      "site_members",
+      "vehicles",
+      "wash_queue",
+      "wash_history"
+    ],
+    "rls": "enabled on all six public tables",
+    "data_api_grants": "explicit least privilege; anon has no table access; authenticated receives only required table operations; operational changes via RPC",
+    "realtime": [
+      "vehicles",
+      "wash_queue",
+      "wash_history"
+    ],
+    "security_advisors": "zero findings after grant hardening",
+    "health_advisors": "zero findings",
+    "edge_functions": "none required by current frontend; business operations implemented as protected database RPCs",
+    "storage": "not provisioned; current app/reference has no file upload requirement",
+    "initial_data": "zero auth users, zero platform admins, zero sites, zero memberships, zero vehicles, zero queue items, zero history items"
   }
 }
