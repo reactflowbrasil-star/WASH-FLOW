@@ -53,7 +53,7 @@
         "supabase/migrations",
         "supabase/tests"
       ],
-      "status": "REVIEW",
+      "status": "DONE",
       "acceptance": "RLS, papéis, transições e operações privilegiadas validadas"
     },
     {
@@ -113,6 +113,34 @@
       ],
       "status": "BLOCKED",
       "acceptance": "Conta real confirmada e vínculo privilegiado realizado sem bootstrap público"
+    },
+    {
+      "id": "WF-009",
+      "description": "Materializar peso de prioridade e ordenar fila no PostgreSQL",
+      "owner": "DATABASE",
+      "priority": 90,
+      "dependencies": [
+        "WF-002"
+      ],
+      "resources": [
+        "supabase/migrations"
+      ],
+      "status": "DONE",
+      "acceptance": "Peso gerado 1-4 e ordenação por prioridade e entrada validadas em transação"
+    },
+    {
+      "id": "WF-010",
+      "description": "Executar matriz de autorização e isolamento real multi-tenant",
+      "owner": "SECURITY",
+      "priority": 95,
+      "dependencies": [
+        "WF-004"
+      ],
+      "resources": [
+        "supabase/tests"
+      ],
+      "status": "DONE",
+      "acceptance": "Dois tenants isolados; owner convida; manager não convida; operator executa; inspector devolve e aprova"
     }
   ]
 }
