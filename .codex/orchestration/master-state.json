@@ -1,18 +1,18 @@
 {
   "project": "WASH FLOW",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "master_directive": "PROMPT OBRIGATÓRIO",
   "neural_a": "execution and verification",
   "neural_b": "strategy and risk review",
   "environment": "Supabase development + GitHub main; deployment not configured",
   "remote_database_migrated": true,
   "deployed": false,
-  "ci": "GraphOS 5-test version + TypeScript/Vite build green through commit 84ffc9fcb951aaab5f3129063ae4f5cf405be707. GraphOS v2 scheduler/Knowledge Graph passed 8 local harness tests; subsequent GitHub Actions attempts include runner startup_failure (no jobs) and newer run queued.",
-  "last_verified": "2026-11-05T16:46:00Z",
+  "ci": "GREEN: GraphOS 8 tests + Knowledge Graph (11 nodes/11 edges) + npm install + TypeScript/Vite build passed on commit d3da145ac2fc0d7d0f36f3219b62683ea9073e5a",
+  "last_verified": "2026-11-05T16:50:22Z",
   "blockers": [
     "first platform admin requires a real controlled Auth account",
     "no physical-device E2E with two live user sessions yet",
     "hosting provider not connected; Vercel has no available team, Netlify has no linked project or deployment action"
   ],
-  "next": "verify queued CI on latest GraphOS skill commit; complete real-account browser E2E; configure hosting"
+  "next": "complete WF-003 end-to-end validation; unblock WF-005 by provisioning a real admin and hosting; verify PWA on physical devices"
 }
