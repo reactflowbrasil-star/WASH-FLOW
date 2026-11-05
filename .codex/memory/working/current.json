@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T17:25:00Z",
+  "updated_at": "2026-11-05T17:32:00Z",
   "current_objective": "Completar homologação e preparar release do WASH FLOW",
   "active_tasks": [
     "WF-003",
@@ -16,7 +16,8 @@
     "WF-010",
     "WF-011",
     "WF-012",
-    "WF-014"
+    "WF-014",
+    "WF-016"
   ],
   "blockers": [
     "primeiro superadmin depende de conta Auth real e controlada pelo proprietário",
@@ -28,13 +29,16 @@
     "hospedagem WASH FLOW não conectada; projeto Netlify disponível é de outro produto e não será reutilizado",
     "Build TypeScript/Vite do último commit ainda sem status verificável pela integração",
     "primeiro superadmin depende de conta Auth real controlada pelo proprietário",
-    "hospedagem WASH FLOW não conectada; Netlify Daily Faith não deve ser reutilizado"
+    "hospedagem WASH FLOW não conectada; Netlify Daily Faith não deve ser reutilizado",
+    "Auth ainda não possui usuários: primeiro superadmin depende de conta real controlada pelo proprietário",
+    "nenhuma unidade cadastrada; banco está vazio intencionalmente",
+    "E2E real e deploy do frontend pendentes"
   ],
   "next_actions": [
-    "confirmar GitHub Actions após parser modular e botão PWA",
-    "executar E2E de autenticação, papéis e isolamento em dois tenants",
-    "testar importação XLSX/XLS/CSV e instalação PWA em dispositivos reais",
-    "criar conta real e ativar superadmin sob controle do proprietário",
-    "conectar hospedagem própria do WASH FLOW após CI/E2E"
+    "criar a primeira conta Auth real e promover o e-mail confirmado a platform_admin",
+    "criar primeira unidade (lava-jato) pelo painel Admin e atribuir owner",
+    "executar testes E2E com dois tenants e quatro papéis usando usuários reais",
+    "verificar configuração Auth de confirmação de e-mail e URLs de redirecionamento no painel",
+    "validar build/deploy do frontend e instalação PWA em dispositivos reais"
   ]
 }
