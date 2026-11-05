@@ -24,7 +24,7 @@
       "resources": [
         "supabase/migrations"
       ],
-      "status": "TESTING",
+      "status": "DONE",
       "acceptance": "Migrações aplicadas, versionadas e auditoria de segurança sem avisos"
     },
     {
@@ -82,7 +82,7 @@
       "resources": [
         "supabase/migrations"
       ],
-      "status": "REVIEW",
+      "status": "DONE",
       "acceptance": "Todas as versões registradas no Supabase têm arquivo correspondente no GitHub"
     },
     {
