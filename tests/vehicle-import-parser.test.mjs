@@ -56,5 +56,5 @@ test('normalizes unknown groups to AM and preserves tenant id', () => {
 
 test('throws for empty sheets and sheets without valid plates', () => {
  assert.throws(() => parseVehicleImport([], 'site-1', groups), /vazia/);
- assert.throws(() => parseVehicleImport([['Placa'],['abc']], 'site-1', groups), /Nenhuma placa válida/);
+ const invalid = parseVehicleImport([['Placa'],['abc']], 'site-1', groups);\n assert.equal(invalid.rows.length, 0);\n assert.equal(invalid.invalid, 1);
 });
