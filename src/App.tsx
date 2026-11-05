@@ -2,6 +2,7 @@ import {useEffect,useState} from 'react';
 import {supabase} from './supabase';
 import type {Session} from '@supabase/supabase-js';
 import * as XLSX from 'xlsx';
+import {parseVehicleImport} from './vehicleImportParser.mjs';
 import {Toaster,toast} from 'sonner';
 type Site={id:string;name:string;slug:string;status:string};
 type Vehicle={id:string;plate:string;brand:string;model:string;vehicle_group:string};
@@ -24,48 +25,16 @@ export function App(){
    const sheetName=workbook.SheetNames[0];if(!sheetName)throw new Error('O arquivo não contém planilhas.');
    const worksheet=workbook.Sheets[sheetName];
    const lines=XLSX.utils.sheet_to_json(worksheet,{header:1,defval:'',raw:false}) as unknown[][];
-   if(!lines.length)throw new Error('A primeira planilha está vazia.');
-   const clean=(v:unknown)=>String(v??'').trim();
-   const normalize=(v:unknown)=>clean(v).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
-   const validPlate=(v:unknown)=>{const p=clean(v).toUpperCase().replace(/[^A-Z0-9]/g,'');return /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(p)||/^[A-Z]{3}[0-9]{4}$/.test(p)?p:''};
-   const headerAliases={plate:['placa','plate','matricula','registration'],brand:['marca','brand','fabricante'],model:['modelo','model','veiculo','vehicle'],group:['grupo','group','categoria','category']};
-   let headerIndex=-1,columns={plate:-1,brand:-1,model:-1,group:-1};
-   for(let i=0;i<Math.min(lines.length,5);i++){
-    const cells=lines[i].map(normalize);
-    const found:any={};
-    for(const key of Object.keys(headerAliases) as (keyof typeof headerAliases)[]){found[key]=cells.findIndex(cell=>headerAliases[key].includes(cell));}
-    if(found.plate>=0){headerIndex=i;columns=found;break;}
-   }
-   const logs=[`Arquivo: ${file.name}`,`Planilha: ${sheetName}`,`Linhas lidas: ${lines.length}`,headerIndex>=0?'Cabeçalho reconhecido na linha '+(headerIndex+1):'Cabeçalho não identificado; procurando placas em todas as colunas.'];
-   const unique=new Map<string,{site_id:string;plate:string;brand:string;model:string;vehicle_group:string}>();
-   let invalid=0,duplicates=0;
-   lines.forEach((line,i)=>{
-    if(!line||line.every(cell=>clean(cell)===''))return;
-    const cells=line.map(clean);if(i===headerIndex)return;
-    let plate='',plateIndex=-1;
-    if(headerIndex>=0&&columns.plate>=0){plate=validPlate(cells[columns.plate]);plateIndex=columns.plate;}
-    if(!plate){for(let c=0;c<cells.length;c++){const candidate=validPlate(cells[c]);if(candidate){plate=candidate;plateIndex=c;break;}}}
-    if(!plate){invalid++;logs.push(`Linha ${i+1}: placa não identificada | ${cells.join(' | ')}`);return;}
-    const value=(key:'brand'|'model'|'group',offset:number)=>headerIndex>=0&&columns[key]>=0?cells[columns[key]]:cells[plateIndex+offset]||'';
-    const brandValue=value('brand',1)||'Desconhecida';
-    const modelValue=value('model',2)||'Desconhecido';
-    const rawGroup=(value('group',3)||'AM').toUpperCase();
-    const groupValue=GROUPS.includes(rawGroup)?rawGroup:'AM';
-    if(rawGroup!==groupValue)logs.push(`Linha ${i+1}: grupo "${rawGroup}" não reconhecido; aplicado AM.`);
-    if(unique.has(plate))duplicates++;
-    unique.set(plate,{site_id:site,plate,brand:brandValue,model:modelValue,vehicle_group:groupValue});
-    logs.push(`IMPORTADO: ${plate} | ${brandValue} | ${modelValue} | ${groupValue}`);
-   });
-   const rows=[...unique.values()];
-   if(!rows.length)throw new Error('Nenhuma placa válida foi identificada. Confira o cabeçalho e as colunas.');
-   if(rows.length>5000)throw new Error('Limite de 5.000 veículos por importação.');
+   const parsed=parseVehicleImport(lines,site,GROUPS);
+   if(!parsed.rows.length)throw new Error('Nenhuma placa válida foi identificada. Confira o cabeçalho e as colunas.');
+   if(parsed.rows.length>5000)throw new Error('Limite de 5.000 veículos por importação.');
    let imported=0;
-   for(let i=0;i<rows.length;i+=500){
-    const result=await supabase.from('vehicles').upsert(rows.slice(i,i+500),{onConflict:'site_id,plate'});
+   for(let i=0;i<parsed.rows.length;i+=500){
+    const result=await supabase.from('vehicles').upsert(parsed.rows.slice(i,i+500),{onConflict:'site_id,plate'});
     if(result.error)throw new Error('Falha no lote '+(Math.floor(i/500)+1)+': '+result.error.message);
-    imported+=Math.min(500,rows.length-i);
+    imported+=Math.min(500,parsed.rows.length-i);
    }
-   logs.push(`Total importado/atualizado: ${imported}`,`Linhas sem placa válida: ${invalid}`,`Placas repetidas consolidadas: ${duplicates}`);
+   const logs=[`Arquivo: ${file.name}`,`Planilha: ${sheetName}`,...parsed.logs,`Total importado/atualizado: ${imported}`,`Linhas sem placa válida: ${parsed.invalid}`,`Placas repetidas consolidadas: ${parsed.duplicates}`];
    setDiagnostic(logs.join('\\n'));setNotice(imported+' veículos importados/atualizados');toast.success(imported+' veículos importados/atualizados.');await reload();
   }catch(err){const message=err instanceof Error?err.message:String(err);setError(message);toast.error(message);}
   finally{e.target.value='';}
