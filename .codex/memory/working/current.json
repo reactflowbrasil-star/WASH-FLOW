@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "updated_at": "2026-11-05T16:43:00Z",
+  "current_objective": "Completar homologação e preparar release do WASH FLOW",
+  "active_tasks": [
+    "WF-003",
+    "WF-005"
+  ],
+  "completed_recently": [
+    "WF-004",
+    "WF-006",
+    "WF-009",
+    "WF-010",
+    "WF-011"
+  ],
+  "blockers": [
+    "primeiro superadmin depende de conta Auth real do proprietário",
+    "E2E em dois dispositivos físicos ainda não executado",
+    "hospedagem não conectada"
+  ],
+  "next_actions": [
+    "verificar CI após últimas alterações",
+    "testar fluxo no browser/dispositivos com contas reais",
+    "conectar hospedagem e validar preview"
+  ]
+}
