@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "updated_at": "2026-11-05T16:43:00Z",
+  "lessons": [
+    {
+      "id": "LESSON-001",
+      "cause": "Trigger guard_queue_update blocked inspector approval inside SECURITY DEFINER completion RPC because it checked inspector membership without excluding trusted function owner context.",
+      "fix": "Apply inspector-only direct-DML restriction only when current_user is not postgres; keep authorization inside private completion RPC.",
+      "test": "Role-matrix SQL test confirms operator cannot approve, inspector can request rework and approve."
+    },
+    {
+      "id": "LESSON-002",
+      "cause": "History FK had no covering index.",
+      "fix": "Add index on wash_history(site_id,vehicle_id).",
+      "test": "Supabase Performance Advisor no longer reports unindexed foreign key."
+    },
+    {
+      "id": "LESSON-003",
+      "cause": "Frontend history KPIs based on last 200 rows would undercount older history.",
+      "fix": "Use exact count queries for today and month.",
+      "test": "TypeScript/Vite CI green."
+    },
+    {
+      "id": "LESSON-004",
+      "cause": "Initial npm build errors from nullable Supabase client and missing Vite ImportMeta types.",
+      "fix": "Add vite-env.d.ts and non-null client assertions after guards.",
+      "test": "GitHub Actions build green."
+    }
+  ]
+}
