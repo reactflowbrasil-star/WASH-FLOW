@@ -34,3 +34,17 @@ on conflict (user_id) do nothing;
 - Importação XLSX (CSV já implementado).
 - Auditoria das funções `SECURITY DEFINER` (avisos do Supabase).
 - Publicação em hospedagem e validação do service worker PWA.
+
+## Painel de superadmin
+- Indicadores globais de unidades, veículos, serviços em aberto e concluídos.
+- Cadastro de unidades e suspensão/reativação.
+- As políticas RLS restringem a leitura e a operação de cada lavajato aos seus membros; o superadmin tem visão global.
+
+## Segurança e homologação
+- As implementações privilegiadas de RPC ficam no schema não exposto `private`; as funções públicas são wrappers `SECURITY INVOKER`.
+- Última auditoria Supabase: **zero avisos de segurança**.
+- Testes transacionais versionados em `supabase/tests/tenant_isolation.sql`: isolamento RLS, bloqueio de lavagem duplicada e negação de transição por usuário sem vínculo.
+- Configuração SPA/PWA para Vercel em `vercel.json`.
+
+## Estado de publicação
+A hospedagem ainda não está conectada. A conta Vercel atualmente conectada não apresenta equipes disponíveis para criar um projeto Git. O build npm ainda não foi validado neste ambiente por indisponibilidade/timeout ao instalar dependências. Não anunciar como produção até executar o CI, completar o bootstrap do primeiro superadmin e validar os fluxos com contas de teste.
