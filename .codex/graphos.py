@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""GraphOS: planejador DAG com validação de dependências e conflitos de recursos.
-Executa planejamento local; não inicia subagentes externos.
+"""GraphOS: scheduler DAG, Knowledge Graph validator and persistent planning output.
+The registry is logical-only unless the host platform actually provides subagent execution.
 """
 import json
 import pathlib
@@ -9,9 +9,11 @@ import sys
 ROOT = pathlib.Path(__file__).parent
 GRAPH = ROOT / "orchestration" / "task-graph.json"
 KNOWLEDGE = ROOT / "knowledge" / "knowledge-graph.json"
+DONE = {"DONE", "INTEGRATED"}
+BLOCKED = {"BLOCKED", "FAILED", "CANCELLED"}
 
 
-def waves(tasks):
+def schedule(tasks):
     ids = [task["id"] for task in tasks]
     if len(ids) != len(set(ids)):
         raise ValueError("IDs de tarefa duplicados")
@@ -20,14 +22,20 @@ def waves(tasks):
         missing = set(task.get("dependencies", [])) - known
         if missing:
             raise ValueError(f"Dependências inexistentes em {task['id']}: {sorted(missing)}")
-    remaining = {task["id"]: task for task in tasks}
-    done = set()
+
+    status = {task["id"]: task.get("status", "READY").upper() for task in tasks}
+    done = {task_id for task_id, state in status.items() if state in DONE}
+    blocked = {task_id for task_id, state in status.items() if state in BLOCKED}
+    remaining = {task["id"]: task for task in tasks
+                 if status[task["id"]] not in DONE | BLOCKED}
     result = []
+
     while remaining:
         ready = [task for task in remaining.values()
                  if set(task.get("dependencies", [])) <= done]
         if not ready:
-            raise ValueError("Ciclo detectado no grafo de dependências")
+            blocked.update(remaining.keys())
+            break
         ready.sort(key=lambda task: (-task.get("priority", 0), task["id"]))
         wave = []
         locked = set()
@@ -37,14 +45,15 @@ def waves(tasks):
                 wave.append(task)
                 locked.update(resources)
         if not wave:
-            raise ValueError("Escalonador não encontrou tarefa segura")
+            blocked.update(remaining.keys())
+            break
         completed = [task["id"] for task in wave]
         result.append(completed)
         done.update(completed)
         for task_id in completed:
             remaining.pop(task_id)
-    return result
 
+    return {"execution_waves": result, "blocked_tasks": sorted(blocked)}
 
 
 def validate_knowledge(graph):
@@ -66,30 +75,30 @@ def validate_knowledge(graph):
 
 
 def run_tests():
-    assert waves([{"id": "a"}, {"id": "b", "dependencies": ["a"]}]) == [["a"], ["b"]]
-    assert waves([{"id": "a", "resources": ["x"]}, {"id": "b", "resources": ["x"]}]) == [["a"], ["b"]]
+    assert schedule([{"id": "a"}, {"id": "b", "dependencies": ["a"]}])["execution_waves"] == [["a"], ["b"]]
+    assert schedule([{"id": "a", "resources": ["x"]}, {"id": "b", "resources": ["x"]}])["execution_waves"] == [["a"], ["b"]]
+    assert schedule([{"id": "a", "status": "DONE"}, {"id": "b", "dependencies": ["a"]}])["execution_waves"] == [["b"]]
+    plan = schedule([{"id": "done", "status": "DONE"}, {"id": "blocked", "status": "BLOCKED"}, {"id": "wait", "dependencies": ["blocked"]}, {"id": "ready"}])
+    assert plan["execution_waves"] == [["ready"]] and plan["blocked_tasks"] == ["blocked", "wait"]
+    cycle = schedule([{"id": "a", "dependencies": ["b"]}, {"id": "b", "dependencies": ["a"]}])
+    assert cycle["execution_waves"] == [] and cycle["blocked_tasks"] == ["a", "b"]
     try:
-        waves([{"id": "a", "dependencies": ["b"]}, {"id": "b", "dependencies": ["a"]}])
-        raise AssertionError("Ciclo não detectado")
-    except ValueError:
-        pass
-    try:
-        waves([{"id": "a", "dependencies": ["missing"]}])
+        schedule([{"id": "a", "dependencies": ["missing"]}])
         raise AssertionError("Dependência inexistente não detectada")
     except ValueError:
         pass
     try:
-        waves([{"id": "a"}, {"id": "a"}])
+        schedule([{"id": "a"}, {"id": "a"}])
         raise AssertionError("ID duplicado não detectado")
     except ValueError:
         pass
-    assert validate_knowledge({"nodes":[{"id":"a"},{"id":"b"}],"edges":[{"from":"a","to":"b","type":"depends"}]}) is True
+    assert validate_knowledge({"nodes": [{"id": "a"}, {"id": "b"}], "edges": [{"from": "a", "to": "b", "type": "depends"}]})
     try:
-        validate_knowledge({"nodes":[{"id":"a"}],"edges":[{"from":"a","to":"missing","type":"depends"}]})
+        validate_knowledge({"nodes": [{"id": "a"}], "edges": [{"from": "a", "to": "missing", "type": "depends"}]})
         raise AssertionError("Aresta inválida não detectada")
     except ValueError:
         pass
-    print("GraphOS: 6 testes aprovados")
+    print("GraphOS: 8 testes aprovados")
 
 
 if __name__ == "__main__":
@@ -98,4 +107,7 @@ if __name__ == "__main__":
     validate_knowledge(knowledge)
     if "--test" in sys.argv:
         run_tests()
-    print(json.dumps({"execution_waves": waves(tasks), "knowledge_nodes": len(knowledge["nodes"]), "knowledge_edges": len(knowledge["edges"])}, ensure_ascii=False, indent=2))
+    output = schedule(tasks)
+    output["knowledge_nodes"] = len(knowledge["nodes"])
+    output["knowledge_edges"] = len(knowledge["edges"])
+    print(json.dumps(output, ensure_ascii=False, indent=2))
