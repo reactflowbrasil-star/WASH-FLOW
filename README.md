@@ -13,9 +13,10 @@ O documento PROMPT OBRIGATÓRIO no Google Drive é a diretriz mestre. Consulte t
 - Importação de XLSX, XLS e CSV com diagnóstico por linha e limite de 1.000 veículos por lote.
 - Pesquisa de frota e restauração confirmada dos dez veículos de referência.
 - Entrada na fila com prioridade Baixa/Normal/Alta/Urgente e observações/avarias.
-- Ordenação por prioridade, alteração autorizada de prioridade e prevenção de duplicidade.
+- Peso de prioridade calculado no PostgreSQL (1–4), ordenação por peso e horário, alteração autorizada e prevenção de duplicidade.
+- Busca de placa na recepção, preenchimento dos dados do veículo e bloqueio de placa não cadastrada.
 - Fluxo NaFila → Lavando → AguardandoConferencia → Concluido ou Refazer.
-- Conferência com modal de motivo obrigatório para retrabalho e aprovação atômica.
+- Conferência com modal de motivo obrigatório para retrabalho e aprovação atômica por conferente autorizado.
 - Remoção controlada de itens ainda não iniciados na fila, validada por RPC.
 - Histórico com snapshot de marca/modelo/grupo, horários, observações e duração.
 - KPIs de lavagens hoje e no mês, com contagens completas no banco.
@@ -64,7 +65,7 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 - GraphOS: cinco testes do planejador aprovados.
 - Supabase Security Advisor: zero findings na última auditoria.
 - Supabase Performance Advisor: somente avisos informativos de índices ainda sem uso, esperados porque o banco de homologação está vazio.
-- Testes transacionais versionados em supabase/tests/tenant_isolation.sql: isolamento RLS, bloqueio de duplicidade e bloqueio de transição por usuário sem vínculo.
+- Testes transacionais versionados em supabase/tests/: isolamento RLS real com dois tenants, matriz owner/manager/operator/inspector, bloqueio de duplicidade e negação de operações por usuários sem vínculo.
 
 ## Pendências antes de produção
 - Criar e vincular o primeiro superadministrador real.
