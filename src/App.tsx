@@ -6,7 +6,6 @@ import {Toaster,toast} from 'sonner';
 type Site={id:string;name:string;slug:string;status:string};
 type Vehicle={id:string;plate:string;brand:string;model:string;vehicle_group:string};
 type Job={id:string;vehicle_id:string;plate:string;priority:string;status:string;created_at:string;started_at?:string|null;finished_at?:string|null;notes?:string|null;rejection_reason?:string|null};
-const PRIORITY_ORDER:Record<string,number>={Urgente:1,Alta:2,Normal:3,Baixa:4};
 const GROUPS=['AM','B','BS','EA','CA','SU','SV','CG','G1','G2','AT'];
 const MODELS:Record<string,string[]>={Chevrolet:['Onix','Onix Plus','Tracker','Spin','S10','Cruze','Montana'],Fiat:['Strada','Argo','Mobi','Pulse','Fastback','Toro','Cronos'],Volkswagen:['Polo','T-Cross','Nivus','Saveiro','Virtus','Taos','Amarok'],Toyota:['Corolla','Corolla Cross','Hilux','Yaris','Yaris Sedan','SW4'],Hyundai:['HB20','HB20S','Creta'],Renault:['Kwid','Duster','Oroch','Sandero','Logan','Stepway'],Jeep:['Renegade','Compass','Commander'],Honda:['Civic','HR-V','City','City Hatch','ZR-V'],Nissan:['Kicks','Frontier','Versa'],Ford:['Ranger','Maverick','Territory','Mustang'],'Caoa Chery':['Tiggo 5X','Tiggo 7','Tiggo 8','Arrizo 6'],'Citroën':['C3','C3 Aircross','C4 Cactus'],Peugeot:['208','2008','Expert'],Mitsubishi:['L200','Eclipse Cross','Pajero']};
 export function App(){
