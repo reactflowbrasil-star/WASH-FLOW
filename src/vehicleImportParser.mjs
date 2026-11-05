@@ -5,10 +5,10 @@ const validPlate = value => {
  return /^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(plate) || /^[A-Z]{3}[0-9]{4}$/.test(plate) ? plate : '';
 };
 const aliases = {
- plate: ['placa', 'plate', 'matricula', 'registration'],
- brand: ['marca', 'brand', 'fabricante'],
- model: ['modelo', 'model', 'veiculo', 'vehicle'],
- group: ['grupo', 'group', 'categoria', 'category']
+ plate: ['placa', 'placaveiculo', 'placadoveiculo', 'plate', 'vehicleplate', 'matricula', 'registration'],
+ brand: ['marca', 'marcaveiculo', 'brand', 'fabricante', 'montadora'],
+ model: ['modelo', 'modeloveiculo', 'model', 'veiculo', 'vehicle'],
+ group: ['grupo', 'grupoveiculo', 'grupooperacional', 'group', 'categoria', 'category']
 };
 export function parseVehicleImport(lines, siteId, groups) {
  if (!Array.isArray(lines) || lines.length === 0) throw new Error('A primeira planilha está vazia.');
