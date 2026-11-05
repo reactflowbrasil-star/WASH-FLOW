@@ -10,7 +10,7 @@ O documento PROMPT OBRIGATÓRIO no Google Drive é a diretriz mestre. Consulte t
 - Painel superadministrativo: indicadores globais, cadastro de unidades e suspensão/reativação.
 - Equipe por unidade, com papéis owner, manager, operator e inspector.
 - Cadastro de frota com dicionário de marcas/modelos, grupos e opções manuais.
-- Importação de XLSX, XLS e CSV com diagnóstico por linha e limite de 1.000 veículos por lote.
+- Importação de XLSX, XLS e CSV com identificação de placas em qualquer coluna, diagnóstico por linha e limite de 5.000 veículos por lote.
 - Pesquisa de frota e seed automático, idempotente, dos dez veículos de referência na primeira abertura de cada unidade vazia; restauração manual também disponível.
 - Entrada na fila com prioridade Baixa/Normal/Alta/Urgente e observações/avarias.
 - Peso de prioridade calculado no PostgreSQL (1–4), ordenação por peso e horário, alteração autorizada e prevenção de duplicidade.
@@ -21,7 +21,7 @@ O documento PROMPT OBRIGATÓRIO no Google Drive é a diretriz mestre. Consulte t
 - Histórico com snapshot de marca/modelo/grupo, horários, observações e duração.
 - KPIs de lavagens hoje e no mês, com contagens completas no banco.
 - Supabase Realtime por unidade, contadores nas abas e notificações Sonner para urgentes, conferência e retrabalho.
-- Manifest PWA, orientação portrait-primary, metadados mobile/iOS e service worker para cache básico da interface.
+- Manifest PWA, orientação portrait-primary, metadados mobile/iOS e Service Worker versionado com pré-cache dos assets JS/CSS compilados, fallback de navegação offline e limpeza de caches antigos.
 
 ## Instalação e desenvolvimento
 1. npm install
@@ -60,7 +60,7 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 - A equipe está em modo logical-only: os perfis especializados são responsabilidades registradas, não processos externos de subagentes ativos.
 - O GitHub Actions executa os testes GraphOS e o build TypeScript/Vite.
 
-## Evidências recentes
+## Evolução recente (05/11/2026)\n- SheetJS: leitura XLSX/XLS/CSV, normalização de placas, upsert em lote e diagnóstico da planilha.\n- Service Worker wash-flow-v3: pré-cache dos assets compilados detectados no HTML, fallback offline e remoção de versões antigas; sintaxe validada com Node.\n- Publicação Realtime confirmada para vehicles, wash_queue e wash_history.\n- Segurança Supabase: zero findings; performance advisor mostra quatro índices ainda não utilizados no banco vazio (informativo).\n\n## Evidências recentes
 - GitHub Actions: build aprovado no commit 40a6a3c1410bb0ffc4df46a3611a4fb5f48f7647.
 - GraphOS: oito testes do planejador/DAG e Knowledge Graph; escalonador ignora tarefas DONE/INTEGRATED e reporta bloqueadas sem reexecutá-las.
 - Supabase Security Advisor: zero findings na última auditoria.
