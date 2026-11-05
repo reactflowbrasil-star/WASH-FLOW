@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T16:43:00Z",
+  "updated_at": "2026-11-05T17:08:00Z",
   "nodes": [
     {
       "id": "frontend",
@@ -56,6 +56,11 @@
       "id": "pwa",
       "type": "client",
       "label": "Manifest and service worker"
+    },
+    {
+      "id": "sheetjs",
+      "type": "library",
+      "label": "SheetJS XLSX/XLS/CSV import and diagnostics"
     }
   ],
   "edges": [
@@ -113,6 +118,16 @@
       "from": "frontend",
       "to": "pwa",
       "type": "installs_as"
+    },
+    {
+      "from": "frontend",
+      "to": "sheetjs",
+      "type": "imports_vehicle_spreadsheets"
+    },
+    {
+      "from": "pwa",
+      "to": "frontend",
+      "type": "caches_application_shell"
     }
   ]
 }
