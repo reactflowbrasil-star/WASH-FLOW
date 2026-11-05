@@ -17,6 +17,18 @@ test('recognizes headers with arbitrary column order and accent', () => {
  assert.equal(result.rows[0].vehicle_group, 'AM');
 });
 
+
+test('recognizes compound spreadsheet column names', () => {
+ const result = parseVehicleImport([
+  ['Placa do Veículo','Fabricante','Modelo do Veículo','Grupo Operacional'],
+  ['BHZ7A01','Toyota','Corolla','AM']
+ ], 'site-1', groups);
+ assert.equal(result.rows.length, 1);
+ assert.equal(result.rows[0].brand, 'Toyota');
+ assert.equal(result.rows[0].model, 'Corolla');
+ assert.equal(result.rows[0].vehicle_group, 'AM');
+});
+
 test('finds Mercosul and legacy plates anywhere without importing header text', () => {
  const result = parseVehicleImport([
   ['Placa','Marca','Modelo','Grupo'],
