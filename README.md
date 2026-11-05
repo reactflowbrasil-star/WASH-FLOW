@@ -55,7 +55,7 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 
 ## GraphOS e coordenação bi-neural
 - Task Graph, Agent Graph, Knowledge Graph e memórias L1 Working, L2 Project, L3 Evolutionary e L4 Strategic versionados em .codex/.
-- Planejador DAG valida IDs, dependências, ciclos e conflitos de recursos.
+- Skill reutilizável em .codex/skills/graphos-intelligence/; planejador DAG valida IDs, dependências, ciclos, status e conflitos de recursos, e o Knowledge Graph valida nós/arestas.
 - Neural-A representa execução/verificação; Neural-B representa estratégia/revisão.
 - A equipe está em modo logical-only: os perfis especializados são responsabilidades registradas, não processos externos de subagentes ativos.
 - O GitHub Actions executa os testes GraphOS e o build TypeScript/Vite.
