@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T16:43:00Z",
+  "updated_at": "2026-11-05T17:08:00Z",
   "frontend": {
     "framework": "React + TypeScript + Vite",
     "state": "React hooks",
     "ui": "CSS responsivo + Sonner",
-    "spreadsheet": "SheetJS xlsx"
+    "spreadsheet": "SheetJS xlsx: XLSX, XLS and CSV with row-level diagnostics"
   },
   "backend": {
     "provider": "Supabase",
@@ -40,5 +40,11 @@
   "deployment": {
     "target": "not connected",
     "status": "not production"
+  },
+  "pwa": {
+    "manifest": "manifest.webmanifest",
+    "service_worker": "public/sw.js",
+    "cache_version": "wash-flow-v3",
+    "offline": "navigation fallback and runtime asset cache"
   }
 }
