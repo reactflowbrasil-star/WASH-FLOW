@@ -1,1 +1,36 @@
-*{box-sizing:border-box}body{margin:0;background:#f4f7fc;color:#15263e;font:15px system-ui,sans-serif}button,input,select{font:inherit;padding:11px;border-radius:9px;border:1px solid #d7e0ee}button{cursor:pointer;background:#2563eb;color:white;border:0}header{background:#132442;color:white;padding:18px;display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap}header select{color:#14233b}main{max-width:1150px;margin:auto;padding:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.card{background:white;padding:20px;border:1px solid #e5eaf2;border-radius:13px;margin:12px 0}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.row>*{max-width:100%}table{border-collapse:collapse;width:100%;min-width:520px}td,th{text-align:left;padding:12px;border-bottom:1px solid #e5eaf2}.scroll{overflow:auto}.error{color:#a32036}.auth{max-width:400px;margin:10vh auto}.auth input{display:block;width:100%;margin:12px 0}nav button{background:#e8f0ff;color:#17396e}nav button.active{background:#2563eb;color:white}@media(max-width:600px){main{padding:10px}header{padding:12px}}
+*{box-sizing:border-box}
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1e293b;background:#f1f5f9;font-synthesis:none;text-rendering:optimizeLegibility}
+body{margin:0;min-width:320px;min-height:100vh;background:#f1f5f9;color:#1e293b;font-size:14px}
+button,input,select,textarea{font:inherit;padding:11px 13px;border-radius:10px;border:1px solid #dbe3ef;max-width:100%;transition:border-color .15s,box-shadow .15s,background .15s}
+input,select,textarea{background:#fff;color:#172554}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.13)}
+textarea{width:100%;min-height:76px;resize:vertical}
+button{cursor:pointer;background:#2563eb;color:white;border:0;font-weight:650;box-shadow:0 1px 2px rgba(15,23,42,.08)}
+button:hover{background:#1d4ed8}
+button:disabled{opacity:.5;cursor:not-allowed}
+header{background:linear-gradient(110deg,#2563eb 0%,#4f46e5 52%,#1d4ed8 100%);color:white;padding:20px 24px;display:flex;justify-content:space-between;gap:15px;align-items:center;flex-wrap:wrap;box-shadow:0 5px 18px rgba(30,64,175,.18)}
+header strong{font-size:22px;letter-spacing:-.04em;font-weight:850}
+header small{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.24);padding:8px 11px;border-radius:12px;color:#eff6ff;font-weight:650}
+header select{color:#14233b}
+main{max-width:1180px;margin:18px auto;padding:18px;background:#fff;border:1px solid #e2e8f0;border-radius:24px;box-shadow:0 16px 44px rgba(15,23,42,.07);min-height:70vh}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.card{background:white;padding:18px;border:1px solid #e5eaf2;border-radius:16px;margin:12px 0;box-shadow:0 2px 8px rgba(15,23,42,.035)}
+.card h2{margin:0 0 12px;font-size:18px;letter-spacing:-.02em;color:#172554}
+.card h1{font-size:30px;letter-spacing:-.04em;margin:8px 0;color:#1d4ed8}
+.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.row>*{max-width:100%}
+table{border-collapse:collapse;width:100%;min-width:560px;background:#fff}
+td,th{text-align:left;padding:12px 14px;border-bottom:1px solid #e5eaf2;vertical-align:middle}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#64748b;background:#f8fafc;position:sticky;top:0}
+tbody tr:hover{background:#f8fafc}
+.scroll{overflow:auto;border:1px solid #e2e8f0;border-radius:14px}
+.error{color:#a32036;background:#fff1f2;border:1px solid #fecdd3;padding:10px 12px;border-radius:10px}
+.auth{max-width:420px;margin:10vh auto}
+.auth input{display:block;width:100%;margin:12px 0}
+nav.row{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding:5px 2px 14px;margin-bottom:16px;border-bottom:1px solid #e2e8f0}
+nav button{background:#eef2ff;color:#3730a3;white-space:nowrap;box-shadow:none}
+nav button:hover{background:#e0e7ff}
+nav button.active{background:#2563eb;color:white}
+pre{font-size:11px;color:#334155;background:#f8fafc;white-space:pre-wrap;overflow:auto}
+label{font-size:12px;font-weight:700;color:#475569}
+@media(max-width:600px){main{padding:10px;margin:8px;border-radius:16px}header{padding:14px 12px;gap:10px}header strong{font-size:19px}header .row{width:100%}header select{flex:1;min-width:120px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card{padding:14px;margin:8px 0}.card h1{font-size:25px}td,th{padding:10px 11px}}
