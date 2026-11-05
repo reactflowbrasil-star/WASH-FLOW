@@ -171,6 +171,23 @@
       ],
       "status": "TESTING",
       "acceptance": "Pré-cache de assets compilados, fallback de navegação offline e sintaxe JavaScript validada"
+    },
+    {
+      "id": "WF-014",
+      "description": "Extrair parser de importação e adicionar testes automatizados",
+      "owner": "QA",
+      "priority": 88,
+      "dependencies": [
+        "WF-007"
+      ],
+      "resources": [
+        "src/vehicleImportParser.mjs",
+        "tests/vehicle-import-parser.test.mjs",
+        "package.json",
+        ".github/workflows/ci.yml"
+      ],
+      "status": "DONE",
+      "acceptance": "Seis testes Node aprovados localmente; declaração TypeScript verificada; npm test integrado ao CI"
     }
   ]
 }
