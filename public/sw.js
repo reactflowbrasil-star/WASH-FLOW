@@ -1,4 +1,4 @@
-const C='wash-flow-v2';
-self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['/','/index.html','/manifest.webmanifest','/icon.svg'])));self.skipWaiting()});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('wash-flow-')&&k!==C).map(k=>caches.delete(k)))));self.clients.claim()});
+const C='wash-flow-v3';
+self.addEventListener('install',e=>{e.waitUntil((async()=>{const c=await caches.open(C);await c.addAll(['/','/index.html','/manifest.webmanifest','/icon.svg']);try{const r=await fetch('/');const html=await r.text();const assets=(html.match(/(?:src|href)="[^"]+\.(?:js|css)"/g)||[]).map(x=>x.slice(x.indexOf('"')+1,-1));await Promise.allSettled(assets.map(x=>c.add(x)));}catch(_){}await self.skipWaiting();})());});
+self.addEventListener('activate',e=>{e.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k.startsWith('wash-flow-')&&k!==C).map(k=>caches.delete(k)));await self.clients.claim();})());});
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==self.location.origin)return;if(r.mode==='navigate'){e.respondWith(fetch(r).catch(()=>caches.match('/index.html')));return;}e.respondWith(caches.match(r).then(cached=>cached||fetch(r).then(response=>{if(response.ok){const copy=response.clone();caches.open(C).then(c=>c.put(r,copy));}return response;}).catch(()=>caches.match(r))));});
