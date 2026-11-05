@@ -1,0 +1,7 @@
+{"event_type":"TASK_CREATED","task_id":"WF-001","summary":"Início do scaffold WASH FLOW; subagentes externos indisponíveis neste ambiente"}
+{"event_type":"TASK_COMPLETED","task_id":"WF-001","summary":"Diretrizes do Drive, arquivo HTML original e arquitetura multi-tenant revisados"}
+{"event_type":"TASK_COMPLETED","task_id":"WF-002","summary":"Supabase migrado; RLS habilitada em seis tabelas; auditoria de segurança sem findings"}
+{"event_type":"TEST_PASSED","task_id":"WF-003","summary":"GitHub Actions executou npm install e npm run build com sucesso no commit 6e1e93636ae33bf2508468cf09d5a8a1d21b5ae7"}
+{"event_type":"FEATURE_COMPLETED","task_id":"WF-007","summary":"Importação Excel/CSV, prioridade Baixa, ordenação, busca, dicionários, histórico detalhado e restauração manual da frota padrão versionados"}
+{"event_type":"BLOCKER_DETECTED","task_id":"WF-008","summary":"Sem usuários Auth cadastrados; bootstrap de superadmin depende de conta real e operação privilegiada segura"}
+{"event_type":"BLOCKER_DETECTED","task_id":"WF-005","summary":"Hospedagem Vercel sem equipe disponível; Netlify sem projeto; E2E ainda não executados"}
