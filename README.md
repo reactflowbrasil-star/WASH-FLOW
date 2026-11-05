@@ -11,7 +11,7 @@ O documento PROMPT OBRIGATÓRIO no Google Drive é a diretriz mestre. Consulte t
 - Equipe por unidade, com papéis owner, manager, operator e inspector.
 - Cadastro de frota com dicionário de marcas/modelos, grupos e opções manuais.
 - Importação de XLSX, XLS e CSV com diagnóstico por linha e limite de 1.000 veículos por lote.
-- Pesquisa de frota e restauração confirmada dos dez veículos de referência.
+- Pesquisa de frota e seed automático, idempotente, dos dez veículos de referência na primeira abertura de cada unidade vazia; restauração manual também disponível.
 - Entrada na fila com prioridade Baixa/Normal/Alta/Urgente e observações/avarias.
 - Peso de prioridade calculado no PostgreSQL (1–4), ordenação por peso e horário, alteração autorizada e prevenção de duplicidade.
 - Busca de placa na recepção, preenchimento dos dados do veículo e bloqueio de placa não cadastrada.
@@ -65,7 +65,7 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 - GraphOS: cinco testes do planejador aprovados.
 - Supabase Security Advisor: zero findings na última auditoria.
 - Supabase Performance Advisor: somente avisos informativos de índices ainda sem uso, esperados porque o banco de homologação está vazio.
-- Testes transacionais versionados em supabase/tests/: isolamento RLS real com dois tenants, matriz owner/manager/operator/inspector, bloqueio de duplicidade e negação de operações por usuários sem vínculo.
+- Testes transacionais versionados em supabase/tests/: isolamento RLS real com dois tenants, matriz owner/manager/operator/inspector, bloqueio de duplicidade, negação de operações por usuários sem vínculo e seed idempotente.
 
 ## Pendências antes de produção
 - Criar e vincular o primeiro superadministrador real.
