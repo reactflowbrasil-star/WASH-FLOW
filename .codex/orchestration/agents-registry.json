@@ -1,0 +1,50 @@
+{
+  "mode": "logical-only",
+  "note": "Perfis e responsabilidades; nenhum processo de subagente iniciado ou alegado.",
+  "agents": [
+    {
+      "id": "MASTER_ORCHESTRATOR",
+      "specialty": "coordenação e integração"
+    },
+    {
+      "id": "ARCHITECT",
+      "specialty": "arquitetura e contratos"
+    },
+    {
+      "id": "BACKEND",
+      "specialty": "regras e APIs"
+    },
+    {
+      "id": "FRONTEND",
+      "specialty": "interface e acessibilidade"
+    },
+    {
+      "id": "DATABASE",
+      "specialty": "PostgreSQL, RLS e migrações"
+    },
+    {
+      "id": "SECURITY",
+      "specialty": "auth, autorização e auditoria"
+    },
+    {
+      "id": "DEVOPS",
+      "specialty": "CI/CD, PWA e hospedagem"
+    },
+    {
+      "id": "QA",
+      "specialty": "testes e aceitação"
+    },
+    {
+      "id": "RESEARCH",
+      "specialty": "pesquisa técnica"
+    },
+    {
+      "id": "MEMORY",
+      "specialty": "memória progressiva"
+    },
+    {
+      "id": "INTEGRATION",
+      "specialty": "compatibilidade e integração"
+    }
+  ]
+}
