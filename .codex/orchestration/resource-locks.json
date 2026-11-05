@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "active_locks": [],
+  "policy": "Uma tarefa por recurso mutável; commits GitHub serializados por arquivo; banco apenas via migrações versionadas.",
+  "last_updated": "2026-11-05T16:19:00Z"
+}
