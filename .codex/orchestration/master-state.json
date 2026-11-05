@@ -1,18 +1,18 @@
 {
   "project": "WASH FLOW",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "master_directive": "PROMPT OBRIGATÓRIO",
   "neural_a": "execution and verification",
   "neural_b": "strategy and risk review",
   "environment": "Supabase development + GitHub main; deployment not configured",
   "remote_database_migrated": true,
   "deployed": false,
-  "ci": "green on commit 6e1e93636ae33bf2508468cf09d5a8a1d21b5ae7; later commits queued/running at last inspection",
-  "last_verified": "2026-11-05T16:19:00Z",
+  "ci": "GraphOS + npm run build green on 40a6a3c1410bb0ffc4df46a3611a4fb5f48f7647; README commit 46008ffc2765ec15fe4a485f7fe61b2fff569f63 queued/running at last check",
+  "last_verified": "2026-11-05T16:24:00Z",
   "blockers": [
     "first superadmin requires a real Auth user and privileged association",
     "E2E with two real tenants and role matrix",
     "Netlify/Vercel deployment connection unavailable"
   ],
-  "next": "finish migration chain mirror; verify latest CI; complete RLS/E2E; deployment"
+  "next": "verify latest CI; perform two-tenant role-matrix E2E; bootstrap first superadmin; connect hosting"
 }
