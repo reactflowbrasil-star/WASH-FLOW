@@ -26,7 +26,7 @@ O documento PROMPT OBRIGATÓRIO no Google Drive é a diretriz mestre. Consulte t
 ## Instalação e desenvolvimento
 1. npm install
 2. Copie .env.example para .env.
-3. Configure VITE_SUPABASE_URL e VITE_SUPABASE_PUBLISHABLE_KEY com os valores públicos do projeto.
+3. O `.env.example` já contém a URL e a publishable key pública deste projeto. Copie para `.env` quando necessário; nunca use service_role/secret key no frontend.
 4. npm run dev
 5. npm run build
 6. python3 .codex/graphos.py --test
