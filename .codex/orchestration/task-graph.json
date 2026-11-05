@@ -1,0 +1,118 @@
+{
+  "version": 2,
+  "tasks": [
+    {
+      "id": "WF-001",
+      "description": "Mapear fontes e arquitetura",
+      "owner": "ARCHITECT",
+      "priority": 100,
+      "dependencies": [],
+      "resources": [
+        "docs"
+      ],
+      "status": "DONE",
+      "acceptance": "Documentação do Drive e HTML original identificados"
+    },
+    {
+      "id": "WF-002",
+      "description": "Estruturar banco multi-tenant, RLS e migrações",
+      "owner": "DATABASE",
+      "priority": 95,
+      "dependencies": [
+        "WF-001"
+      ],
+      "resources": [
+        "supabase/migrations"
+      ],
+      "status": "TESTING",
+      "acceptance": "Migrações aplicadas, versionadas e auditoria de segurança sem avisos"
+    },
+    {
+      "id": "WF-003",
+      "description": "Implementar frontend responsivo e módulos operacionais",
+      "owner": "FRONTEND",
+      "priority": 95,
+      "dependencies": [
+        "WF-001"
+      ],
+      "resources": [
+        "src"
+      ],
+      "status": "TESTING",
+      "acceptance": "Build verde, cadastro, importação, fila, QA e histórico"
+    },
+    {
+      "id": "WF-004",
+      "description": "Revisão de segurança e segregação multi-tenant",
+      "owner": "SECURITY",
+      "priority": 90,
+      "dependencies": [
+        "WF-002"
+      ],
+      "resources": [
+        "supabase/migrations",
+        "supabase/tests"
+      ],
+      "status": "REVIEW",
+      "acceptance": "RLS, papéis, transições e operações privilegiadas validadas"
+    },
+    {
+      "id": "WF-005",
+      "description": "Teste integrado e publicação",
+      "owner": "QA",
+      "priority": 80,
+      "dependencies": [
+        "WF-003",
+        "WF-004"
+      ],
+      "resources": [
+        "deploy"
+      ],
+      "status": "BLOCKED",
+      "acceptance": "E2E, Realtime em dois dispositivos, PWA e URL de deploy verificadas"
+    },
+    {
+      "id": "WF-006",
+      "description": "Sincronizar cadeia de migrações remotas com GitHub",
+      "owner": "INTEGRATION",
+      "priority": 92,
+      "dependencies": [
+        "WF-002"
+      ],
+      "resources": [
+        "supabase/migrations"
+      ],
+      "status": "REVIEW",
+      "acceptance": "Todas as versões registradas no Supabase têm arquivo correspondente no GitHub"
+    },
+    {
+      "id": "WF-007",
+      "description": "Implementar aderência às funcionalidades do HTML e documentos Drive",
+      "owner": "FRONTEND",
+      "priority": 90,
+      "dependencies": [
+        "WF-003"
+      ],
+      "resources": [
+        "src"
+      ],
+      "status": "TESTING",
+      "acceptance": "Excel/CSV, prioridades, busca, grupos, modelos, histórico e alertas operacionais"
+    },
+    {
+      "id": "WF-008",
+      "description": "Ativar primeiro superadministrador com conta real",
+      "owner": "SECURITY",
+      "priority": 85,
+      "dependencies": [
+        "WF-002"
+      ],
+      "resources": [
+        "auth",
+        "platform_admins"
+      ],
+      "status": "BLOCKED",
+      "acceptance": "Conta real confirmada e vínculo privilegiado realizado sem bootstrap público"
+    }
+  ]
+}
