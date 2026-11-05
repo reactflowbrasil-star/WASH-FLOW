@@ -1,10 +1,10 @@
-import {useRef,useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {createWorker} from 'tesseract.js';
 
 const platePattern = /[A-Z]{3}[0-9][A-Z0-9][0-9]{2}/g;
 function extractPlate(text:string):string|null{
  const cleaned=text.toUpperCase().replace(/[^A-Z0-9]/g,'');
- const candidates=cleaned.match(platePattern)||[];
+ const candidates=[...(text.toUpperCase().match(/[A-Z]{3}[0-9][A-Z0-9][0-9]{2}/g)||[]),...(cleaned.match(platePattern)||[])];
  return candidates.find(p=>/^[A-Z]{3}[0-9](?:[0-9]{3}|[A-Z][0-9]{2})$/.test(p))||null;
 }
 type Props={onRead:(plate:string)=>void};
@@ -16,13 +16,15 @@ export function PlateScanner({onRead}:Props){
  const [message,setMessage]=useState('');
  const [preview,setPreview]=useState('');
  const stop=()=>{stream.current?.getTracks().forEach(t=>t.stop());stream.current=null;setOpen(false)};
+ useEffect(()=>()=>{stream.current?.getTracks().forEach(t=>t.stop())},[]);
+ useEffect(()=>{if(open&&video.current&&stream.current){video.current.srcObject=stream.current;void video.current.play().catch(()=>{})}},[open]);
  async function start(){
   setMessage('');
   if(!navigator.mediaDevices?.getUserMedia){setMessage('Câmera indisponível. Abra o site em HTTPS e permita o acesso à câmera.');return}
   try{
    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
    stream.current=s;setOpen(true);
-   requestAnimationFrame(()=>{if(video.current){video.current.srcObject=s;void video.current.play().catch(()=>{})}});
+
   }catch{setMessage('Não foi possível acessar a câmera. Verifique a permissão do navegador.')}
  }
  async function recognize(source:HTMLCanvasElement){
@@ -39,7 +41,7 @@ export function PlateScanner({onRead}:Props){
   finally{if(worker)await worker.terminate().catch(()=>{});setBusy(false)}
  }
  async function capture(){
-  const v=video.current;if(!v||!v.videoWidth)return;
+  const v=video.current;if(!v||!v.videoWidth){setMessage('Aguarde a inicialização da câmera e tente novamente.');return;}
   const canvas=document.createElement('canvas');
   canvas.width=v.videoWidth;canvas.height=v.videoHeight;
   const ctx=canvas.getContext('2d');if(!ctx)return;
