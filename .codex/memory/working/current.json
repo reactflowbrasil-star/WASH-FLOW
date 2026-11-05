@@ -1,10 +1,11 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T16:50:22Z",
+  "updated_at": "2026-11-05T17:08:00Z",
   "current_objective": "Completar homologação e preparar release do WASH FLOW",
   "active_tasks": [
     "WF-003",
-    "WF-005"
+    "WF-005",
+    "WF-013"
   ],
   "completed_recently": [
     "WF-004",
@@ -21,8 +22,10 @@
     "hospedagem não conectada; Vercel sem equipe disponível e Netlify sem projeto vinculado"
   ],
   "next_actions": [
-    "concluir E2E em navegador/dispositivos com contas reais",
+    "confirmar CI do commit mais recente e corrigir erros de build se houver",
+    "testar importação XLSX/XLS/CSV com planilhas reais",
+    "executar E2E com dois tenants e quatro perfis",
     "bootstrap do primeiro superadmin após conta real",
-    "conectar hospedagem e validar preview público"
+    "conectar hospedagem e validar URL pública"
   ]
 }
