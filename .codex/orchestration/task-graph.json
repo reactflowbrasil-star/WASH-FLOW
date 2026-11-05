@@ -157,6 +157,20 @@
       ],
       "status": "DONE",
       "acceptance": "Primeira abertura semeia dez veículos de referência uma vez; restauração manual continua disponível"
+    },
+    {
+      "id": "WF-013",
+      "description": "Aprimorar cache offline do PWA e validar Service Worker",
+      "owner": "DEVOPS",
+      "priority": 80,
+      "dependencies": [
+        "WF-003"
+      ],
+      "resources": [
+        "public/sw.js"
+      ],
+      "status": "TESTING",
+      "acceptance": "Pré-cache de assets compilados, fallback de navegação offline e sintaxe JavaScript validada"
     }
   ]
 }
