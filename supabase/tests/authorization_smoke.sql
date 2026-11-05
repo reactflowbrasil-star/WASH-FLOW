@@ -22,3 +22,21 @@ BEGIN
  IF NOT blocked_delete THEN RAISE EXCEPTION 'FALHA: usuário sem papel excluiu veículo'; END IF;
 END $$;
 ROLLBACK;
+
+-- Usuário sem vínculo não pode remover um item da fila.
+BEGIN;
+DO $$
+DECLARE sid uuid; vid uuid; jid uuid; blocked_remove boolean:=false;
+BEGIN
+ INSERT INTO public.sites(name,slug) VALUES('TESTE REMOÇÃO','teste-remove-rollback') RETURNING id INTO sid;
+ INSERT INTO public.vehicles(site_id,plate,brand,model,vehicle_group) VALUES(sid,'RMV1234','Teste','Teste','AM') RETURNING id INTO vid;
+ INSERT INTO public.wash_queue(site_id,vehicle_id,plate) VALUES(sid,vid,'RMV1234') RETURNING id INTO jid;
+ PERFORM set_config('request.jwt.claim.sub','00000000-0000-4000-8000-000000000099',true);
+ BEGIN
+  PERFORM public.remove_wash_from_queue(jid);
+ EXCEPTION WHEN OTHERS THEN
+  IF SQLERRM='Sem permissão' THEN blocked_remove:=true; ELSE RAISE; END IF;
+ END;
+ IF NOT blocked_remove THEN RAISE EXCEPTION 'FALHA: usuário sem vínculo removeu item da fila'; END IF;
+END $$;
+ROLLBACK;
