@@ -1,8 +1,8 @@
 # Latest execution report — 2026-11-05
 
 ## Verified
-- GitHub Actions GraphOS + TypeScript/Vite build passed through commit 84ffc9fcb951aaab5f3129063ae4f5cf405be707.
-- GraphOS v2 scheduler and Knowledge Graph validator passed eight local harness tests; scheduler skips DONE/INTEGRATED tasks and reports blocked tasks separately.
+- GitHub Actions GraphOS 8 tests + Knowledge Graph (11 nodes/11 edges) + npm install + TypeScript/Vite build passed on commit d3da145ac2fc0d7d0f36f3219b62683ea9073e5a.
+- GraphOS v2 scheduler passed eight tests in GitHub Actions; it schedules only pending tasks, respects shared-resource locks, skips DONE/INTEGRATED and reports WF-005/WF-008 blocked. Knowledge Graph validated with 11 nodes and 11 edges.
 - Supabase Security Advisor: zero findings.
 - All 15 applied Supabase migration versions have matching SQL files in supabase/migrations.
 - Transaction tests passed for two-tenant RLS, owner/manager/operator/inspector role matrix, generated priority weights, safe deletion/removal and idempotent seed.
@@ -18,7 +18,7 @@
 - GraphOS Intelligence skill, Task/Agent/Knowledge graphs, L1-L4 memory and execution journal.
 
 ## CI caveat
-Two GitHub Actions runs reported startup_failure with no jobs, indicating runner startup rather than a test failure. A newer run is queued; the last confirmed green build remains the commit listed above.
+Older GitHub Actions runs had transient startup_failure with no jobs; the latest run above is green.
 
 ## Not production
 - First real superadmin account and bootstrap are pending.
