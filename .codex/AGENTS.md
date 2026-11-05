@@ -10,6 +10,14 @@ Fonte normativa: Google Drive, documento **PROMPT OBRIGATÓRIO** (ID 1WiGcURYchQ
 - Ciclo obrigatório: planejamento → execução → verificação → reflexão → consolidação → replanejamento.
 - Registre decisões, evidências, bloqueios, autor e estado no journal. Atualize memória progressiva sem apagar histórico.
 
+## Memória externa em quatro níveis
+- L1 Working: objetivo, tarefa ativa, arquivos, estado, dependências e bloqueios.
+- L2 Project: arquitetura, contratos, convenções, decisões e histórico.
+- L3 Evolutionary: soluções, falhas, causas, testes e lições aprendidas.
+- L4 Strategic: objetivos, roadmap, prioridades, riscos e restrições.
+- O Knowledge Graph relaciona frontend, Auth, PostgreSQL/RLS, RPC, Realtime, migrações, CI, GraphOS e PWA.
+- Toda atualização relevante deve ser rastreável por timestamp, origem, evidência e validade.
+
 ## Segurança e release
 - Supabase multi-tenant com RLS por site_id. Nunca expor service_role no cliente.
 - Operações privilegiadas devem validar auth.uid() e papéis no servidor.
