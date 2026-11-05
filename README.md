@@ -54,7 +54,7 @@ on conflict (user_id) do nothing;
 Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 
 ## GraphOS e coordenação bi-neural
-- Task Graph, Agent Graph e Knowledge/Strategic Memory versionados em .codex/.
+- Task Graph, Agent Graph, Knowledge Graph e memórias L1 Working, L2 Project, L3 Evolutionary e L4 Strategic versionados em .codex/.
 - Planejador DAG valida IDs, dependências, ciclos e conflitos de recursos.
 - Neural-A representa execução/verificação; Neural-B representa estratégia/revisão.
 - A equipe está em modo logical-only: os perfis especializados são responsabilidades registradas, não processos externos de subagentes ativos.
@@ -62,7 +62,7 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 
 ## Evidências recentes
 - GitHub Actions: build aprovado no commit 40a6a3c1410bb0ffc4df46a3611a4fb5f48f7647.
-- GraphOS: cinco testes do planejador aprovados.
+- GraphOS: oito testes do planejador/DAG e Knowledge Graph; escalonador ignora tarefas DONE/INTEGRATED e reporta bloqueadas sem reexecutá-las.
 - Supabase Security Advisor: zero findings na última auditoria.
 - Supabase Performance Advisor: somente avisos informativos de índices ainda sem uso, esperados porque o banco de homologação está vazio.
 - Testes transacionais versionados em supabase/tests/: isolamento RLS real com dois tenants, matriz owner/manager/operator/inspector, bloqueio de duplicidade, negação de operações por usuários sem vínculo e seed idempotente.
