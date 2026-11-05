@@ -75,7 +75,7 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 - GraphOS: oito testes do planejador/DAG e Knowledge Graph; escalonador ignora tarefas DONE/INTEGRATED e reporta bloqueadas sem reexecutá-las.
 - Supabase Security Advisor: zero findings na última auditoria.
 - Supabase Performance Advisor: somente avisos informativos de índices ainda sem uso, esperados porque o banco de homologação está vazio.
-- Testes transacionais versionados em supabase/tests/: isolamento RLS real com dois tenants, matriz owner/manager/operator/inspector, bloqueio de duplicidade, negação de operações por usuários sem vínculo e seed idempotente.
+- Testes SQL versionados em `supabase/tests/`: isolamento RLS, bloqueio de duplicidade e regressão de privilégios mínimos (sem acesso anon; sem DML direto proibido; RPCs apenas para authenticated).
 
 ## Pendências antes de produção
 - Criar e vincular o primeiro superadministrador real.
