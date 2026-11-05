@@ -1,18 +1,18 @@
 {
   "project": "WASH FLOW",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "master_directive": "PROMPT OBRIGATÓRIO",
   "neural_a": "execution and verification",
   "neural_b": "strategy and risk review",
   "environment": "Supabase development + GitHub main; deployment not configured",
   "remote_database_migrated": true,
   "deployed": false,
-  "ci": "GraphOS 5 tests + TypeScript/Vite build green through commit b335bfb4bf49115c497ff6e0ed557556ebed2655; seed and later commits awaiting CI at last inspection",
-  "last_verified": "2026-11-05T16:41:00Z",
+  "ci": "GraphOS 5-test version + TypeScript/Vite build green through commit 84ffc9fcb951aaab5f3129063ae4f5cf405be707. GraphOS v2 scheduler/Knowledge Graph passed 8 local harness tests; subsequent GitHub Actions attempts include runner startup_failure (no jobs) and newer run queued.",
+  "last_verified": "2026-11-05T16:46:00Z",
   "blockers": [
-    "first superadmin requires a real Auth account controlled by project owner",
-    "E2E on two physical devices and production-like role accounts",
-    "Vercel account has no available teams; Netlify team has no linked project or deploy capability through current connector"
+    "first platform admin requires a real controlled Auth account",
+    "no physical-device E2E with two live user sessions yet",
+    "hosting provider not connected; Vercel has no available team, Netlify has no linked project or deployment action"
   ],
-  "next": "verify latest CI; physical-device E2E; first real superadmin bootstrap; connect deployment target"
+  "next": "verify queued CI on latest GraphOS skill commit; complete real-account browser E2E; configure hosting"
 }
