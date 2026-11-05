@@ -1,0 +1,43 @@
+{
+  "id": "strategic-001",
+  "version": 2,
+  "project": "WASH FLOW",
+  "objectives": [
+    "PWA multi-tenant para lavajatos",
+    "Painel superadministrativo",
+    "Supabase Realtime",
+    "GraphOS com memória persistente",
+    "Aderência aos cinco documentos do Drive e HTML original"
+  ],
+  "sources": [
+    "PROMPT OBRIGATÓRIO",
+    "skill obrigatória",
+    "Instruções Mestre - CarWash Pro",
+    "DB",
+    "01",
+    "controle_de_lavagem (24).html"
+  ],
+  "constraints": [
+    "Não usar escrita pública no banco",
+    "Não expor service_role",
+    "Não alegar execução de subagentes inexistentes",
+    "Não publicar em produção sem CI, E2E e revisão"
+  ],
+  "decisions": [
+    {
+      "id": "DEC-001",
+      "decision": "Prioridades incluem Baixa, Normal, Alta e Urgente",
+      "evidence": "Documentos 01 e DB"
+    },
+    {
+      "id": "DEC-002",
+      "decision": "Exclusão de veículo apenas por RPC e sem histórico",
+      "evidence": "RLS e integridade referencial"
+    },
+    {
+      "id": "DEC-003",
+      "decision": "Frota padrão inserida apenas por ação confirmada, não automaticamente",
+      "evidence": "Evita poluir unidades reais com dados de demonstração"
+    }
+  ]
+}
