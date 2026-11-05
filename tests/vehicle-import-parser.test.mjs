@@ -6,7 +6,7 @@ const groups = ['AM','B','BS','EA','CA','SU','SV','CG','G1','G2','AT'];
 
 test('recognizes headers with arbitrary column order and accent', () => {
  const result = parseVehicleImport([
-  ['Grupo','Modelo','Placa','Marca'],
+  ['Grupo','Modelo','Matrícula','Marca'],
   ['AM','Corolla','BHZ7A01','Toyota'],
   ['SU','Compass','BHZ7B02','Jeep']
  ], 'site-1', groups);
@@ -54,7 +54,7 @@ test('normalizes unknown groups to AM and preserves tenant id', () => {
  assert.ok(result.logs.some(line => line.includes('grupo "INVALID"')));
 });
 
-test('throws for empty sheets and sheets without valid plates', () => {
+test('handles empty sheets and returns diagnostics when no valid plates are found', () => {
  assert.throws(() => parseVehicleImport([], 'site-1', groups), /vazia/);
  const invalid = parseVehicleImport([['Placa'],['abc']], 'site-1', groups);\n assert.equal(invalid.rows.length, 0);\n assert.equal(invalid.invalid, 1);
 });
