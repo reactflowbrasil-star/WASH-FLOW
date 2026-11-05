@@ -21,7 +21,7 @@ O documento PROMPT OBRIGATÓRIO no Google Drive é a diretriz mestre. Consulte t
 - Histórico com snapshot de marca/modelo/grupo, horários, observações e duração.
 - KPIs de lavagens hoje e no mês, com contagens completas no banco.
 - Supabase Realtime por unidade, contadores nas abas e notificações Sonner para urgentes, conferência e retrabalho.
-- Manifest PWA, orientação portrait-primary, metadados mobile/iOS e Service Worker versionado com pré-cache dos assets JS/CSS compilados, fallback de navegação offline e limpeza de caches antigos.
+- Manifest PWA, orientação portrait-primary, metadados mobile/iOS, botão de instalação com prompt Android/Chrome e instruções de instalação manual no iPhone; Service Worker versionado com pré-cache dos assets JS/CSS compilados, fallback de navegação offline e limpeza de caches antigos.
 
 ## Instalação e desenvolvimento
 1. npm install
@@ -61,7 +61,7 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 - O GitHub Actions executa os testes GraphOS e o build TypeScript/Vite.
 
 ## Testes automatizados
-- `npm test`: seis cenários do parser de importação, cobrindo cabeçalhos com acentos e colunas fora de ordem, placas Mercosul/antigas, linhas inválidas, duplicidades, grupos e isolamento por unidade.
+- `npm test`: sete cenários do parser de importação, cobrindo cabeçalhos com acentos e colunas fora de ordem, placas Mercosul/antigas, linhas inválidas, duplicidades, grupos e isolamento por unidade.
 - CI executa os testes antes do build TypeScript/Vite.
 
 ## Evolução recente (05/11/2026)
