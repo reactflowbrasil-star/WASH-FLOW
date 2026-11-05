@@ -64,7 +64,13 @@ Não existe bootstrap público de superadmin. Não associe contas desconhecidas.
 - `npm test`: seis cenários do parser de importação, cobrindo cabeçalhos com acentos e colunas fora de ordem, placas Mercosul/antigas, linhas inválidas, duplicidades, grupos e isolamento por unidade.
 - CI executa os testes antes do build TypeScript/Vite.
 
-## Evolução recente (05/11/2026)\n- SheetJS: leitura XLSX/XLS/CSV, normalização de placas, upsert em lote e diagnóstico da planilha.\n- Service Worker wash-flow-v3: pré-cache dos assets compilados detectados no HTML, fallback offline e remoção de versões antigas; sintaxe validada com Node.\n- Publicação Realtime confirmada para vehicles, wash_queue e wash_history.\n- Segurança Supabase: zero findings; performance advisor mostra quatro índices ainda não utilizados no banco vazio (informativo).\n\n## Evidências recentes
+## Evolução recente (05/11/2026)
+- SheetJS: leitura XLSX/XLS/CSV, normalização de placas, upsert em lote e diagnóstico da planilha.
+- Service Worker wash-flow-v3: pré-cache dos assets compilados detectados no HTML, fallback offline e remoção de versões antigas; sintaxe validada com Node.
+- Publicação Realtime confirmada para vehicles, wash_queue e wash_history.
+- Segurança Supabase: zero findings; performance advisor mostra quatro índices ainda não utilizados no banco vazio (informativo).
+
+## Evidências recentes
 - GitHub Actions: build aprovado no commit 40a6a3c1410bb0ffc4df46a3611a4fb5f48f7647.
 - GraphOS: oito testes do planejador/DAG e Knowledge Graph; escalonador ignora tarefas DONE/INTEGRATED e reporta bloqueadas sem reexecutá-las.
 - Supabase Security Advisor: zero findings na última auditoria.
