@@ -57,6 +57,5 @@ export function parseVehicleImport(lines, siteId, groups) {
   logs.push('IMPORTADO: ' + plate + ' | ' + brand + ' | ' + model + ' | ' + group);
  });
  const rows = [...unique.values()];
- if (!rows.length) throw new Error('Nenhuma placa válida foi identificada. Confira o cabeçalho e as colunas.');
  return { rows, logs, invalid, duplicates, headerIndex };
 }
