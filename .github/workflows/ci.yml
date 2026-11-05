@@ -16,5 +16,7 @@ jobs:
         run: python3 .codex/graphos.py --test
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Test vehicle import parser
+        run: npm test
       - name: Build
         run: npm run build
