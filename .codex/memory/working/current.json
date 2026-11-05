@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T16:43:00Z",
+  "updated_at": "2026-11-05T16:50:22Z",
   "current_objective": "Completar homologação e preparar release do WASH FLOW",
   "active_tasks": [
     "WF-003",
@@ -9,18 +9,20 @@
   "completed_recently": [
     "WF-004",
     "WF-006",
+    "WF-007",
     "WF-009",
     "WF-010",
-    "WF-011"
+    "WF-011",
+    "WF-012"
   ],
   "blockers": [
-    "primeiro superadmin depende de conta Auth real do proprietário",
-    "E2E em dois dispositivos físicos ainda não executado",
-    "hospedagem não conectada"
+    "primeiro superadmin depende de conta Auth real e controlada pelo proprietário",
+    "E2E em dispositivos físicos com dois tenants ainda não executado",
+    "hospedagem não conectada; Vercel sem equipe disponível e Netlify sem projeto vinculado"
   ],
   "next_actions": [
-    "verificar CI após últimas alterações",
-    "testar fluxo no browser/dispositivos com contas reais",
-    "conectar hospedagem e validar preview"
+    "concluir E2E em navegador/dispositivos com contas reais",
+    "bootstrap do primeiro superadmin após conta real",
+    "conectar hospedagem e validar preview público"
   ]
 }
