@@ -1,11 +1,12 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T17:18:00Z",
+  "updated_at": "2026-11-05T17:25:00Z",
   "frontend": {
     "framework": "React + TypeScript + Vite",
     "state": "React hooks",
     "ui": "CSS responsivo + Sonner",
-    "spreadsheet": "SheetJS XLSX/XLS/CSV plus isolated vehicleImportParser.mjs: header alias detection, strict Brazilian plate validation, duplicate consolidation, invalid-row diagnostics, 500-row upsert batches"
+    "spreadsheet": "SheetJS XLSX/XLS/CSV plus isolated vehicleImportParser.mjs: header alias detection, strict Brazilian plate validation, duplicate consolidation, invalid-row diagnostics, 500-row upsert batches",
+    "access_control": "Site member role loaded with membership; team invitation form is visible only to owner or platform admin; backend RPC remains authoritative."
   },
   "backend": {
     "provider": "Supabase",
@@ -45,7 +46,8 @@
     "manifest": "manifest.webmanifest",
     "service_worker": "public/sw.js",
     "cache_version": "wash-flow-v3",
-    "offline": "navigation fallback and runtime asset cache"
+    "offline": "navigation fallback and runtime asset cache",
+    "installation": "beforeinstallprompt action for Android/Chrome; manual installation guidance for iOS Safari"
   },
   "testing": {
     "unit_tests": "Node built-in test runner",
