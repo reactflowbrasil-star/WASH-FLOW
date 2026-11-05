@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "updated_at": "2026-11-05T16:43:00Z",
+  "frontend": {
+    "framework": "React + TypeScript + Vite",
+    "state": "React hooks",
+    "ui": "CSS responsivo + Sonner",
+    "spreadsheet": "SheetJS xlsx"
+  },
+  "backend": {
+    "provider": "Supabase",
+    "database": "PostgreSQL",
+    "auth": "Supabase Auth",
+    "tenant_key": "site_id",
+    "realtime": [
+      "vehicles",
+      "wash_queue",
+      "wash_history"
+    ],
+    "rls": true,
+    "private_schema": "private"
+  },
+  "workflow": {
+    "queue_states": [
+      "NaFila",
+      "Lavando",
+      "AguardandoConferencia",
+      "Refazer",
+      "Concluido"
+    ],
+    "priority_weights": {
+      "Urgente": 1,
+      "Alta": 2,
+      "Normal": 3,
+      "Baixa": 4
+    },
+    "priority_weight_storage": "generated column",
+    "approval": "atomic RPC inserts immutable history and marks queue item completed"
+  },
+  "deployment": {
+    "target": "not connected",
+    "status": "not production"
+  }
+}
