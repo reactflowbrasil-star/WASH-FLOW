@@ -1,13 +1,14 @@
 {
   "name": "WASH FLOW",
   "short_name": "WASH FLOW",
-  "start_url": "/",
+  "start_url": "/washflow/",
+  "scope": "/washflow/",
   "display": "standalone",
   "theme_color": "#2563eb",
   "background_color": "#f5f7fb",
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "/washflow/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }
